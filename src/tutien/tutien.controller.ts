@@ -57,7 +57,7 @@ export class TutienController {
 
         return webPage.pdf({
           printBackground: true,
-          path: `/Volumes/QuangHDD/PDF/${chapter}-vu-luyen-dien-phong.pdf`,
+          path: `pdf/${chapter}-vu-luyen-dien-phong.pdf`,
           displayHeaderFooter: false,
           format: 'A4',
           omitBackground: true,
