@@ -20,7 +20,10 @@ export class TutienController {
   }
 
   @Get('convert-pdf')
-  async convertPdf(@Res() res: Response, @Query() query: ConvertPdfDto) {
+  async convertPdf(
+    @Res() res: Response,
+    @Query() query: ConvertPdfDto,
+  ): Promise<Response<any, Record<string, any>>> {
     const { start, end } = query;
     if (!start || !end) {
       throw new HttpException('Need start and end', HttpStatus.BAD_REQUEST);

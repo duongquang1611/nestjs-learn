@@ -1,28 +1,46 @@
 import {
+  Body,
   Controller,
   Get,
   Header,
   HttpCode,
+  Ip,
   Param,
   Post,
   Query,
   Redirect,
   Req,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { CatsService } from './cats.service';
+import { CreateCatDto } from './dto/create-cat.dto';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
+
   @Post()
   @HttpCode(301)
   @Header('Cache-Control', 'none')
-  create(): string {
-    return 'create post';
+  @UsePipes(new ValidationPipe({ transform: true }))
+  create(@Body() createCatDto: CreateCatDto) {
+    console.log(typeof createCatDto.age);
+
+    return this.catsService.create(createCatDto);
   }
 
   @Get()
   findAll(@Req() request: Request): string {
     return 'get all cats';
+  }
+
+  @Get('ip')
+  getIp(@Ip() ip): string {
+    console.log({ ip });
+
+    return ip;
   }
 
   @Get('ab*cd')
